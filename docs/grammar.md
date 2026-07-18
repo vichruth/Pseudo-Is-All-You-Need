@@ -24,7 +24,11 @@ if-statement        = "IF" condition "THEN" statement-list
                     [ "ELSE" statement-list ]
                     "ENDIF" ;
 condition           = logical-expression ;
-logical-expression  = (expression { ("AND" | "OR") expression }) ;
+logical-expression  = logical-term { ("OR") logical-term } ;
+logical-term        = logical-factor { ("AND") logical-factor } ;
+logical-factor      = "NOT" logical-factor
+                    | "(" logical-expression ")"
+                    | expression ;
 expression          = simple-expression [ ("=" | "<>" | "<" | ">" | "<=" | ">=") simple-expression ] ;
 simple-expression   = term { ("+" | "-") term } ;
 term                = factor { ("*" | "/" | "%") factor } ;
