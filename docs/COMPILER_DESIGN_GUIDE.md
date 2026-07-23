@@ -1,11 +1,21 @@
 # Compiler Design — Working Guide
 
+This file is the *how* for each phase. `PROJECT_PLAN.md` has the authoritative
+phase numbers, scope, and exit criteria for the whole project — the phase
+headers below match that numbering (Phase 0–6) so the two files don't drift
+out of sync.
+
 ## Philosophy
 
 Write it yourself first. Use AI (or anyone) to review, not to generate.
 Every phase below: read the primary source → write your own version →
 get it reviewed → understand *why* any correction is correct before
 applying it.
+
+For this project specifically, code written with AI assistance must still
+be commented to explain what it does — the point of "AI reviews, doesn't
+generate" is that a human understands every line, and comments are how
+that understanding gets checked.
 
 ---
 
@@ -24,36 +34,52 @@ applying it.
 
 ---
 
-## Phase 1 — Grammar & Front-end
+## Phase 0 — Design *(done)*
 
-### Step 1: Grammar design
-- [x] `docs/grammar.md` — done, covers IF/THEN/ELSE, FOR, WHILE, REPEAT/UNTIL,
-      FUNCTIONs, arrays, I/O, comments, AND/OR/NOT with precedence
+- [x] `docs/grammar.md` — covers IF/THEN/ELSE, FOR, WHILE, REPEAT/UNTIL,
+      FUNCTIONs, arrays, I/O, comments, AND/OR/NOT with precedence, plus the
+      full lexical token table and formal EBNF grammar
+- [x] `docs/AST_SPEC.md` / `docs/IR_SPEC.md` — sketches of the AST node
+      shapes and IR instruction set, written before any parser/codegen code
+- [x] `README.md`, `PROJECT_PLAN.md` — architecture and phase plan
 
-### Step 2: Lexer
+## Phase 1 — Frontend: Lexer, Parser, Semantic Analysis
+
+### Step 1: Lexer
 - Write `lexer.h` / `lexer.c` yourself, referencing Crafting Interpreters'
   `scanner.c` chapter directly
 - Decide explicitly, in writing, before coding:
   - Memory ownership: who allocates `Token.text`, who frees it, when
-  - Case sensitivity for keywords
+  - Case sensitivity for keywords (see `docs/grammar.md` — keywords are
+    case-insensitive by design)
   - Whether you need a lookahead/peek buffer, and exactly how it works
-- Test: write a `.pseudo` file with every token type in your grammar,
-  run it through the lexer, manually verify every token printed is correct
+- Test: write a `.pseudo` file with every token type from
+  `docs/grammar.md`'s lexical grammar table, run it through the lexer,
+  manually verify every token printed is correct
 
-### Step 3: Parser (recursive descent)
+### Step 2: Parser (recursive descent)
 - One function per grammar rule (`parse_if_statement()`, `parse_expression()`,
-  etc.) — this maps directly from `docs/grammar.md`, rule by rule
-- Build the AST node types before writing parsing logic
+  etc.) — this maps directly from `docs/grammar.md`'s formal grammar, rule
+  by rule, including the precedence-climbing chain for expressions
+- Build the AST node types from `docs/AST_SPEC.md` before writing parsing
+  logic
 - Test against small valid programs *and* deliberately malformed ones —
   check your error messages are actually useful
 
-### Step 4: AST → IR lowering
-- Decide your IR's shape before writing the lowering code — sketch it on
-  paper first. This is the piece hardest to redo later if wrong.
+### Step 3: Semantic analysis
+- Scope resolution (declared-before-use) and type checking, per the
+  "Semantic rules" section of `docs/grammar.md`
+- Emits `E2xx` errors in the same format as the lexer/parser's `E0xx`/`E1xx`
 
 ---
 
-## Phase 2 — Bytecode VM backend
+## Phase 2 — Shared IR
+
+- Finalize the IR shape from `docs/IR_SPEC.md` and write AST → IR lowering
+- This is the piece hardest to redo later if wrong — don't skip the sketch
+  step, even under time pressure
+
+## Phase 3 — Bytecode VM backend
 
 - IR → bytecode compiler
 - Stack-based VM interpreter (Crafting Interpreters' `clox` VM is the
@@ -61,7 +87,7 @@ applying it.
 - Test: same `.pseudo` programs from Phase 1, verify bytecode execution
   produces correct output
 
-## Phase 3 — AOT-to-C backend
+## Phase 4 — AOT-to-C backend
 
 - IR → C code generator
 - Shell out to `gcc` for the actual native compilation
@@ -69,12 +95,17 @@ applying it.
   output for identical input. This cross-check is your best correctness
   signal.
 
-## Phase 4 — Tooling & polish
+## Phase 5 — Error handling, logging & tooling
 
 - Error messages with source location (you already tracked line numbers
-  in the lexer — use them here)
+  in the lexer — use them here); `.errlog` format is in `README.md`
 - CLI: `run`, `build`, `repl`
 - Full test suite across both backends
+
+## Phase 6 — ML layer (deferred)
+
+- Not started until Phase 1–5 produce a real `.errlog`/keystroke corpus —
+  see `README.md`'s "ML layer" section for the full design
 
 ---
 
