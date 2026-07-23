@@ -149,9 +149,9 @@ The training data for this layer *is* the error log format described above. Phas
 
 ## Status
 
-Currently in Phase 0 (design). Architecture and error-handling design covered in this README; Phase 1 (frontend) is the next concrete implementation step.
+Currently in Phase 0 (design). Architecture and error-handling design covered in this README; Phase 1 (frontend) is the next concrete implementation step. See [docs/grammar.md](docs/grammar.md) for the grammar spec and [docs/COMPILER_DESIGN_GUIDE.md](docs/COMPILER_DESIGN_GUIDE.md) for the phase-by-phase working guide.
 
 ## License
 
-TBD.
+MIT — see [LICENSE](LICENSE).
 
