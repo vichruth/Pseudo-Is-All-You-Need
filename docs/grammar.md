@@ -1,111 +1,59 @@
-# Pseudo Language Grammar Specification
+# Grammar
 
-## Overall Structure
-```
-program             = statement-list ;
-statement-list      = statement { statement } ;
-statement           = assignment-statement
-                    | if-statement
-                    | while-statement
-                    | for-statement
-                    | repeat-until-statement
-                    | function-statement
-                    | return-statement
-                    | block-statement
-                    | read-statement
-                    | write-statement ;
-```
+## Overview
 
-### Control Flow Constructs
+This document outlines the grammar rules for the pseudocode compiler.
 
-#### IF/THEN/ELSE Statement
-```
-if-statement        = "IF" condition "THEN" statement-list
-                    [ "ELSE" statement-list ]
-                    "ENDIF" ;
-condition           = logical-expression ;
-logical-expression  = logical-term { ("OR") logical-term } ;
-logical-term        = logical-factor { ("AND") logical-factor } ;
-logical-factor      = "NOT" logical-factor
-                    | "(" logical-expression ")"
-                    | expression ;
-expression          = simple-expression [ ("=" | "<>" | "<" | ">" | "<=" | ">=") simple-expression ] ;
-simple-expression   = term { ("+" | "-") term } ;
-term                = factor { ("*" | "/" | "%") factor } ;
-factor              = "(" logical-expression ")"
-                    | identifier
-                    | array-access
-                    | number
-                    | string-literal
-                    | "NOT" factor
-                    | "TRUE"
-                    | "FALSE" ;
-```
+## Syntax Rules
 
-#### WHILE Statement
-```
-while-statement     = "WHILE" condition "DO" statement-list "ENDWHILE" ;
-```
+1. **IF-THEN-ELSE Statements**
+   ```plaintext
+   if (condition) then
+       statement_list
+   [else
+       statement_list]
+   endif
+   ```
 
-#### FOR Statement
-```
-for-statement       = "FOR" identifier "=" expression "TO" expression
-                    [ "BY" expression ]
-                    "DO" statement-list "ENDFOR" ;
-```
+2. **FOR Loops**
+   ```plaintext
+   for variable = start to end do
+       statement_list
+   endfor
+   ```
 
-#### REPEAT/UNTIL Statement
-```
-repeat-until-statement = "REPEAT" statement-list "UNTIL" condition "ENDREPEAT" ;
-```
+3. **WHILE Loops**
+   ```plaintext
+   while (condition) do
+       statement_list
+   endwhile
+   ```
 
-### Functions
-```
-function-statement  = "FUNCTION" identifier [ "(" parameter-list ")" ]
-                    "BEGIN" statement-list "ENDFUNCTION" ;
-parameter-list      = identifier { "," identifier } ;
-return-statement    = "RETURN" [ expression ] ;
-```
+4. **REPEAT-UNTIL Loops**
+   ```plaintext
+   repeat
+       statement_list
+   until (condition)
+   ```
 
-### Arrays
-```
-array-access        = identifier "[" expression { "," expression } "]" ;
-array-declaration   = "ARRAY" identifier "[" expression { "," expression } "]" [ "OF" type-name ] ;
-type-name           = "INTEGER" | "REAL" | "BOOLEAN" | "CHARACTER" | "STRING" ;
-```
+5. **FUNCTION Declarations**
+   ```plaintext
+   function name(parameter_list)
+       statement_list
+   endfunction
+   ```
 
-### Input/Output Statements
-```
-read-statement      = "READ" identifier { "," identifier } ;
-write-statement     = "WRITE" expression { "," expression }
-                    | "PRINT" expression { "," expression } ;
-```
+6. **Arrays**
+   ```plaintext
+   array_name[index] = value
+   ```
+   ```plaintext
+   index = array_name.length - 1
+   ```
 
-### Comments
-```
-comment             = "/*" { character } "*/"
-                    | "//" { character } newline ;
-```
+## Semantics Rules
 
-### Additional Elements
-```
-block-statement     = "BEGIN" statement-list "END" ;
-assignment-statement = identifier "=" expression ;
-identifier          = letter { letter | digit } ;
-number              = digit { digit } [ "." digit { digit } ] ;
-string-literal      = '"' { character } '"' ;
-newline             = "\n" ;
-character           = any-character-except-newline ;
-```
-
-### Enhanced Features
-The grammar now includes:
-- **Logical operators** (AND, OR, NOT) in conditions
-- **READ statement** for input operations  
-- **WRITE/PRINT statements** for output operations
-- **Comment syntax** with both /* */ and // styles
-- **Element type specification** in array declarations (OF INTEGER, OF REAL, etc.)
-- **Proper precedence** for logical operators (NOT > AND > OR)
-- **Extended expression grammar** to support all standard operations
-
-This enhanced grammar provides a complete foundation for the pseudocode compiler with all the features specified in your requirements.
+- Conditions must evaluate to boolean values.
+- Loop variables must be integers.
+- Arrays must have valid indices and values.
+- Function calls must pass the correct number of arguments.

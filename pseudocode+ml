@@ -1,0 +1,120 @@
+[// TODO] Update README with grammar documentation link.
+```
+# Compiler Design Course Project — Project Proposal
+
+Submitted by
+Vichruth
+
+B.Tech Computer Science, VIT Vellore
+
+Project Overview
+This project is a compiler for standard textbook pseudocode (IF/THEN/ELSE, FOR, WHILE, REPEAT/UNTIL, FUNCTIONs, arrays), built from scratch in C. Rather than stopping at a single interpreter, the compiler is designed around a dual-backend architecture: a shared intermediate representation (IR) that can be executed two different ways depending on the use case.
+
+What Makes This More Than a Toy Compiler
+Dual-backend execution: one frontend (lexer, parser, semantic analysis) feeds a common IR, which is then consumed by two separate backends — a bytecode compiler + stack-based VM (fast, good for iteration and debugging), and an ahead-of-time (AOT) code generator that emits standalone C source, compiled by gcc into a native binary with zero runtime dependency. This mirrors how production compiler infrastructure like LLVM is structured — one IR, multiple backends.
+Edge-deployment angle: the AOT-to-C backend opens the door to running compiled pseudocode on resource-constrained hardware (e.g. microcontrollers), tying the project to real deployment scenarios rather than staying purely academic.
+Compiler Pipeline
+Lexer — hand-written tokenizer for the pseudocode grammar
+Parser — recursive descent parser producing an Abstract Syntax Tree (AST)
+Semantic Analysis — scope resolution and type checking
+Codegen — AST lowered into a common IR, then compiled to bytecode
+Execution — bytecode VM (stack-based) or AOT compilation to C via gcc
+Tech Stack
+Component
+
+Tool
+
+Purpose
+
+Language
+
+C
+
+Performance, manual memory/stack management
+
+Build
+
+gcc, make
+
+Compiling the project, and the AOT-to-C backend's output
+
+Version Control
+
+Git / GitHub
+
+Incremental, reviewable development history
+
+Debugging
+
+valgrind, gdb
+
+Memory-safety and correctness verification
+
+Reference
+
+Crafting Interpreters (Nystrom)
+
+Design reference for VM architecture
+
+Timeline
+Start date: Sunday, upcoming week
+
+Phase
+
+Duration
+
+Deliverable
+
+Grammar design + Lexer
+
+~1 week
+
+Formal grammar spec, working tokenizer
+
+Parser (recursive descent)
+
+1-2 weeks
+
+AST construction from source
+
+Semantic Analysis
+
+~1 week
+
+Scope/type-checked AST
+
+Bytecode + VM backend
+
+2-3 weeks
+
+Working bytecode compiler + stack VM
+
+AOT-to-C backend
+
+~1 week
+
+Native binary generation from same IR
+
+Testing, docs, demo prep
+
+~1 week
+
+Test suite, README, final review-ready demo
+
+Total estimated duration: 6-9 weeks, worked on alongside coursework.
+
+Repository
+github.com/<username>/pseudo-is-all-you-need (public, MIT licensed)
+
+# TODO: Update README with grammar documentation link.
+```
+<task_progress>
+- [x] Analyze requirements
+- [x] Set up necessary files
+- [x] Gather initial context
+- [x] Implement main functionality
+- [x] Handle edge cases
+- [x] Test the implementation
+- [x] Verify results
+</task_progress>
+</write_to_file>
