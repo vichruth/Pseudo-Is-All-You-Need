@@ -4,6 +4,11 @@ Running record of what actually changed in this project, in order. `PROJECT_PLAN
 
 ---
 
+## 2026-07-23 — Ambiguity docs (prompted by professor's questions)
+
+- Added "Known ambiguities & how they're resolved" to `docs/grammar.md`: reserved-word collision, dangling-else, operator precedence/associativity, and parser lookahead (LL(1)) — the standard compiler-theory ambiguities, and why this grammar doesn't hit them.
+- Added "The keyword-vs-identifier ambiguity (and how this layer resolves it)" to `README.md`'s ML layer section: the adaptive layer is the one place the reserved-word question becomes genuinely ambiguous again (broken input like `fr = 5` could be a typo'd variable or a mangled `for` loop), and the resolution order — grammar validity first, personal history as tiebreaker, honest non-blocking suggestion on a real tie, never a silent guess.
+
 ## 2026-07-23 — Phase 0 complete
 
 - Rewrote `docs/grammar.md`: it previously only had the six statement forms with no formal grammar, no lexical token list, and no operator precedence table — even though `README.md`/the design guide already claimed AND/OR/NOT precedence was "covered." Added: full lexical token table, EBNF-style formal grammar (one rule per parser function to come), precedence table, comments syntax, I/O statements, semantic rules, and a "design choices" section explaining *why* each concrete syntax choice was made (case-insensitive keywords, `=` vs `==`, no semicolons, single-line comments only).

@@ -134,6 +134,22 @@ Most "syntax errors" from a real user aren't random — they're a small, persona
 5. **Feedback loop** — every time a suggestion is accepted or overridden, that outcome feeds back into the model, so it keeps adapting to the user over time rather than staying static.
 6. **Never blocking** — the suggestion UI is inline and non-blocking. It never forces a correction, always just offers one.
 
+### The keyword-vs-identifier ambiguity (and how this layer resolves it)
+
+The core compiler never has to ask "did they mean the keyword `for`, or a variable also called `for`?" — reserved words settle that at the lexer, for every well-formed program (see `docs/grammar.md` → "Known ambiguities"). But this layer's entire job is handling input that *doesn't* parse yet, and that's exactly where this question becomes real again. Example: a user types
+
+```
+fr = 5
+```
+
+That's either a valid assignment to a typo'd variable `fr`, or a badly mangled `for` loop header missing its `= start to end do`. Both are plausible reconstructions of the same broken input, and the layer has to pick one — or admit it can't.
+
+The resolution order, and it matters that it's in this order:
+
+1. **Grammar validity at the exact parse position is the primary signal, not personal history.** What token classes are even syntactically legal at the point the parser choked? If everything after the broken token forms a complete, valid assignment (`= 5`, nothing else), that shape only matches "variable." If there's a dangling `to` / `do` later on the line that doesn't fit anywhere near a plain assignment, that shape only matches a broken `for`. This is the same grammar-position reasoning the parser already does everywhere else — the adaptive layer is just running it against a candidate correction instead of the literal typed text.
+2. **Personal typing history is the tiebreaker, not the decision-maker.** Only once grammar validity has narrowed the field does "this user personally tends to typo `for` as `fr`" get to break a remaining tie.
+3. **A genuine tie is a real outcome, not a failure to handle.** If grammar validity and personal history both come back inconclusive, the layer should not silently guess — it surfaces the ambiguous candidates as a non-blocking suggestion (point 6 below) and lets the user resolve it themselves. Pretending certainty it doesn't have would defeat the "auditable, not a silent black box" principle in point 4 below.
+
 ### Why this depends on Phases 1–5
 
 The training data for this layer *is* the error log format described above. Phase 6 does not start until the core compiler has been in real use long enough to produce a genuine corpus of real errors and real corrections — this is a deliberate sequencing decision, not a scope cut. Building the ML layer first would mean training on synthetic or too-small data.

@@ -220,6 +220,15 @@ output expression  # prints the value of expression
 
 ---
 
+## Known ambiguities & how they're resolved
+
+Common questions worth having sharp answers to (e.g. in a project defense) — each one below is a classic compiler-design ambiguity, and how this specific grammar avoids or resolves it.
+
+- **Reserved-word collision (can `for` ever be a variable name?)** No. Keywords are matched against the reserved-word table *before* the lexer ever considers a word an identifier — so `for`, `if`, `while`, etc. can never be used as variable names, in any casing (`For`, `FOR` are reserved too, since keyword matching is case-insensitive). This is resolved once, at the lexer, for every well-formed program — there's no ambiguity left for the parser to deal with. See `README.md`'s ML layer section for the one place this *does* get genuinely ambiguous again: the adaptive-input layer, which has to guess intent from a token stream that doesn't parse cleanly yet.
+- **Dangling-else.** Classic ambiguity: in a grammar where `if` doesn't require an explicit closing keyword, `if (a) if (b) x else y` is unclear about which `if` the `else` belongs to. This grammar requires every `if` to end with `endif` (see the `if_stmt` rule above), so there's never an unclosed `if` for a trailing `else` to ambiguously attach to. Deliberate choice, not an accident.
+- **Operator precedence / associativity.** `2 + 3 * 4` is unambiguous only because of the fixed precedence table above (`*` binds tighter than `+`). Without it, the grammar would allow more than one valid parse tree for the same expression.
+- **Parser lookahead (is this grammar LL(1)?)** Recursive descent parsing requires that, at every decision point, one token of lookahead is enough to know which grammar rule applies — no backtracking. E.g. in `postfix`, seeing `IDENT` followed by `(` means a function call, followed by `[` means an array index, followed by neither means a plain variable reference — one peek at the next token resolves it every time. Any future grammar change should be checked against this property before being added.
+
 ## Design choices
 
 Why this file picks concrete syntax instead of staying abstract "textbook" pseudocode:
