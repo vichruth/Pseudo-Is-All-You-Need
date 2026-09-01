@@ -1,31 +1,14 @@
+[E100] [Parser] line 4, col 4: expected '(' after 'if'
+[E100] [Parser] line 10, col 5: expected 'then' after if condition
+[E100] [Parser] line 14, col 11: expected 'to' in for loop header
+[E100] [Parser] line 23, col 7: expected ']' after array index
+[E100] [Parser] line 26, col 1: expected 'endwhile' after while loop body
+[E100] [Parser] line 26, col 1: expected 'endfor' after for loop body
+[E100] [Parser] line 26, col 1: expected 'endif' after if statement
+[E100] [Parser] line 26, col 1: expected 'endif' after if statement
 [E201] [Semantic] line 8, col 5: variable 'undeclared_var' used before assignment
 [E201] [Semantic] line 11, col 5: undefined function 'nonexistent_fn'
 [E204] [Semantic] line 14, col 5: function 'compute' expects 2 argument(s) but got 3
 [E202] [Semantic] line 17, col 5: if condition must evaluate to a boolean
 [E203] [Semantic] line 22, col 5: array index must be an integer
 [E205] [Semantic] line 25, col 10: unknown member '.size' (only '.length' is supported)
-[E100] [Parser] line 3, col 17: expected 'then' after if condition
-[E100] [Parser] line 8, col 1: expected statement
-[E100] [Parser] line 10, col 1: unexpected identifier 'fr'; expected assignment or function call
-[E100] [Parser] line 12, col 7: expected 'endif' after if statement
-[E100] [Parser] line 12, col 7: expected 'endfunction' after function body
-[E100] [Parser] line 4, col 9: unexpected identifier 'retun'; expected assignment or function call
-[E100] [Parser] line 8, col 1: expected statement
-[E100] [Parser] line 10, col 1: unexpected identifier 'fr'; expected assignment or function call
-[E100] [Parser] line 12, col 7: expected 'endif' after if statement
-[E100] [Parser] line 12, col 7: expected 'endfunction' after function body
-[E100] [Parser] line 6, col 9: unexpected identifier 'retun'; expected assignment or function call
-[E100] [Parser] line 8, col 1: expected statement
-[E100] [Parser] line 10, col 1: unexpected identifier 'fr'; expected assignment or function call
-[E100] [Parser] line 12, col 7: expected 'endif' after if statement
-[E100] [Parser] line 12, col 7: expected 'endfunction' after function body
-[E100] [Parser] line 10, col 1: unexpected identifier 'fr'; expected assignment or function call
-[E100] [Parser] line 10, col 4: expected '(' after 'if'
-[E100] [Parser] line 12, col 7: expected 'endif' after if statement
-[E100] [Parser] line 11, col 5: unexpected identifier 'otput'; expected assignment or function call
-[E100] [Parser] line 12, col 7: expected 'endfor' after for loop body
-[E100] [Parser] line 10, col 1: expected statement
-[E100] [Parser] line 10, col 1: expected statement
-[E100] [Parser] line 10, col 1: expected statement
-[E100] [Parser] line 11, col 20: expected statement
-[E100] [Parser] line 12, col 7: expected 'endfor' after for loop body

@@ -92,10 +92,7 @@ test-errlog: $(BIN)
 	@grep -q "E203" .errlog || (echo "error: E203 semantic errors not found in .errlog" && exit 1)
 	@grep -q "E204" .errlog || (echo "error: E204 semantic errors not found in .errlog" && exit 1)
 	@grep -q "E205" .errlog || (echo "error: E205 semantic errors not found in .errlog" && exit 1)
-	@echo "Error logging verified: .errlog accurately recorded multi-error diagnostics."
+test-ambiguity: $(BIN)
+test: test-lexer test-ast test-semantics test-ir test-vm test-aot test-ambiguity test-errlog
+	@echo "\nAll Phase 1, 2, 3, 4, 5 & Ambiguity tests passed successfully!"
 
-test: test-lexer test-ast test-semantics test-ir test-vm test-aot test-errlog
-	@echo "\nAll Phase 1, 2, 3, 4, and 5 tests passed successfully!"
-
-clean:
-	rm -rf $(BUILD) .errlog

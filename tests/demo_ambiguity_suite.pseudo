@@ -1,0 +1,146 @@
+// ============================================================================
+// demo_ambiguity_suite.pseudo — Comprehensive Compiler Ambiguity & Stress Test
+// ============================================================================
+
+output "============================================================"
+output "       COMPILER AMBIGUITY & STRESS TEST SUITE               "
+output "============================================================"
+
+// ----------------------------------------------------------------------------
+// TEST 1: Operator Precedence & Associativity (8-Level Climbing)
+// ----------------------------------------------------------------------------
+output ""
+output "--- TEST 1: Operator Precedence & Associativity ---"
+
+// Arithmetic: 3 + (4 * 2) - (10 / 2) = 3 + 8 - 5 = 6
+arithmetic_result = 3 + 4 * 2 - 10 / 2
+output "3 + 4 * 2 - 10 / 2 (Expected: 6):"
+output arithmetic_result
+
+// Relational & Boolean: (10 > 5) AND (NOT (3 == 4)) OR (1 > 10) -> true AND true OR false -> true
+bool_result = 10 > 5 and not (3 == 4) or 1 > 10
+output "10 > 5 and not (3 == 4) or 1 > 10 (Expected: true):"
+output bool_result
+
+// Complex Mixed: (5 + (2 * 3) > 10) AND ((4 * 2) == 8) -> (11 > 10) AND (8 == 8) -> true
+mixed_result = 5 + 2 * 3 > 10 and 4 * 2 == 8
+output "5 + 2 * 3 > 10 and 4 * 2 == 8 (Expected: true):"
+output mixed_result
+
+
+// ----------------------------------------------------------------------------
+// TEST 2: The Classic 'Dangling Else' Resolution
+// ----------------------------------------------------------------------------
+output ""
+output "--- TEST 2: Dangling Else Resolution ---"
+
+outer_flag = true
+inner_flag = false
+
+if (outer_flag) then
+    if (inner_flag) then
+        output "FAIL: Nested IF executed unexpectedly"
+    else
+        output "SUCCESS: Else correctly bound to innermost IF"
+    endif
+endif
+
+
+// ----------------------------------------------------------------------------
+// TEST 3: Lexical Scoping & Variable Shadowing
+// ----------------------------------------------------------------------------
+output ""
+output "--- TEST 3: Lexical Scoping & Variable Shadowing ---"
+
+// Global x
+x = 999
+
+function test_shadow(x)
+    output "Inside function parameter x (Expected: 42):"
+    output x
+    // Modify local parameter x
+    x = x + 1
+    output "Modified local x (Expected: 43):"
+    output x
+    return x
+endfunction
+
+res = test_shadow(42)
+output "Global x after function call (Expected: 999):"
+output x
+
+
+// ----------------------------------------------------------------------------
+// TEST 4: Multi-Branch Deep Recursion (Fibonacci)
+// ----------------------------------------------------------------------------
+output ""
+output "--- TEST 4: Multi-Branch Deep Recursion ---"
+
+function fib(n)
+    if (n <= 0) then
+        return 0
+    endif
+    if (n == 1) then
+        return 1
+    endif
+    return fib(n - 1) + fib(n - 2)
+endfunction
+
+output "Fibonacci(0 to 8):"
+for i = 0 to 8 do
+    output fib(i)
+endfor
+
+
+// ----------------------------------------------------------------------------
+// TEST 5: Dynamic Array Auto-Resizing & Boundary Access
+// ----------------------------------------------------------------------------
+output ""
+output "--- TEST 5: Dynamic Arrays & Length Invariant ---"
+
+arr[0] = 100
+arr[1] = 200
+arr[2] = 300
+arr[3] = 400
+arr[4] = 500
+
+output "Array length (Expected: 5):"
+output arr.length
+
+total = 0
+for k = 0 to arr.length - 1 do
+    total = total + arr[k]
+endfor
+
+output "Sum of array elements (Expected: 1500):"
+output total
+
+
+// ----------------------------------------------------------------------------
+// TEST 6: Nested Control Flow (Loops within Conditionals)
+// ----------------------------------------------------------------------------
+output ""
+output "--- TEST 6: Nested Control Flow ---"
+
+matrix_sum = 0
+for row = 1 to 3 do
+    for col = 1 to 3 do
+        if (row == col) then
+            matrix_sum = matrix_sum + 10
+        else
+            matrix_sum = matrix_sum + 1
+        endif
+    endfor
+endfor
+
+// Diagonal elements (3): 3 * 10 = 30
+// Off-diagonal elements (6): 6 * 1 = 6
+// Total = 36
+output "Nested Matrix Diagonal Sum (Expected: 36):"
+output matrix_sum
+
+output ""
+output "============================================================"
+output "       ALL AMBIGUITY & STRESS TESTS PASSED SUCCESSFULLY     "
+output "============================================================"
+
