@@ -1,0 +1,24 @@
+// Test recursive function and loop execution on the VM
+
+function fact(n)
+    if (n <= 1) then
+        return 1
+    else
+        return n * fact(n - 1)
+    endif
+endfunction
+
+output "--- Factorial Tests ---"
+output fact(1)
+output fact(2)
+output fact(3)
+output fact(4)
+output fact(5)
+
+sum = 0
+for i = 1 to 5 do
+    sum = sum + fact(i)
+endfor
+
+output "--- Sum of Factorials (1 to 5) ---"
+output sum

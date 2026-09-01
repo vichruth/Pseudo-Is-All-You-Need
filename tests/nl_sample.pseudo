@@ -1,0 +1,10 @@
+nums[0] = 50
+nums[1] = 10
+nums[2] = 40
+nums[3] = 20
+
+sort nums
+
+for i = 0 to nums.length - 1 do
+    output nums[i]
+endfor

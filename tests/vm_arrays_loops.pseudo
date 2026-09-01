@@ -1,0 +1,32 @@
+// Test loops, arrays, member length, string concatenation, and conditionals
+
+output "--- Array & Loop Tests ---"
+
+arr[0] = 100
+arr[1] = 200
+arr[2] = 300
+
+output "Array length:"
+output arr.length
+
+output "Array elements:"
+for i = 0 to arr.length - 1 do
+    output arr[i]
+endfor
+
+output "--- While Loop Count Up ---"
+count = 0
+while (count < 3) do
+    output count
+    count = count + 1
+endwhile
+
+output "--- Repeat-Until Count Down ---"
+repeat
+    count = count - 1
+    output count
+until (count == 0)
+
+output "--- String Concatenation ---"
+greeting = "Hello, " + "Pseudocode!"
+output greeting

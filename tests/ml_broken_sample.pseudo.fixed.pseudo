@@ -1,0 +1,12 @@
+// Sample broken pseudocode file containing common human typos
+function factorial(n)
+    if (n <= 1) then
+        return 1
+    else
+        return n * factorial(n - 1)
+    endif
+endfunction
+
+for i = 1 to 5 do
+    output factorial(i)
+endfor

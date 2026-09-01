@@ -1,0 +1,25 @@
+// Malformed program to test semantic analysis and E2xx errors
+
+function compute(a, b)
+    return a + b
+endfunction
+
+// E201: undefined variable 'undeclared_var'
+x = undeclared_var + 10
+
+// E201: undefined function 'nonexistent_fn'
+y = nonexistent_fn(1, 2)
+
+// E204: function arity mismatch (compute expects 2, passed 3)
+z = compute(1, 2, 3)
+
+// E202: condition must evaluate to a boolean (string given)
+if ("not a bool") then
+    output "error"
+endif
+
+// E203: array index must be an integer (string given)
+arr["hello"] = 42
+
+// E205: unknown member access (only .length supported)
+val = arr.size

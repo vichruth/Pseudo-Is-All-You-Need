@@ -1,0 +1,25 @@
+// Malformed pseudocode to test syntax error recovery and multi-error reporting
+
+// Missing '(' after 'if'
+if x > 0 then
+    output "missing paren"
+endif
+
+// Missing 'then'
+if (y < 10)
+    output "missing then"
+endif
+
+// Missing 'to' in for loop
+for i = 0 10 do
+    output i
+endfor
+
+// Missing 'endwhile'
+while (z > 0) do
+    z = z - 1
+
+// Missing ']' in array indexing
+arr[5 = 10
+
+output "recovery continues"

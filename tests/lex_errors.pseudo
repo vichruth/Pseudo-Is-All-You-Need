@@ -1,0 +1,6 @@
+// Deliberately malformed: every lexical error kind, to prove the lexer
+// reports all of them in one pass instead of stopping at the first.
+x = "unterminated
+y = 5 @ 3
+z = a ! b
+output "still lexing after three errors"

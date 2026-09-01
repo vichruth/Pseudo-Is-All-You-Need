@@ -1,0 +1,69 @@
+// Phase 1, step 1 test: exercises every token kind in docs/grammar.md's
+// lexical grammar table. Verify the --dump-tokens output by hand against
+// that table -- this file is the lexer's only test until the parser exists.
+
+// --- keywords, mixed casing, to prove case-insensitive matching ---
+if (TRUE and False) then
+    OUTPUT "all keywords"
+ElSe
+    output "mixed casing still lexes as keywords"
+endif
+
+// --- identifiers that merely start like keywords (must stay T_IDENT) ---
+iffy = 1
+format = 2
+notation = 3
+to_total = 4
+_leading_underscore = 5
+averyveryverylongidentifier = 6   // longer than LEXER_MAX_KEYWORD_LEN
+
+// --- loops ---
+for i = 0 to 10 do
+    while (i < 10) do
+        output i
+    endwhile
+    repeat
+        output i
+    until (i > 3)
+endfor
+
+// --- functions, params, calls, return ---
+function add(a, b)
+    return a + b
+endfunction
+
+total = add(1, 2)
+
+// --- arrays: indexing and the only member access in v1 ---
+arr[0] = 42
+last = arr.length - 1
+
+// --- all arithmetic operators ---
+x = 1 + 2 - 3 * 4 / 5 % 6
+
+// --- all comparison operators ---
+a = 10
+b = 20
+if (a == b) then output "eq"  endif
+if (a != b) then output "neq" endif
+if (a <  b) then output "lt"  endif
+if (a >  b) then output "gt"  endif
+if (a <= b) then output "lte" endif
+if (a >= b) then output "gte" endif
+
+// --- unary not, and unary minus ---
+if (not true) then
+    output -x
+endif
+
+// --- literals: int, float, string ---
+count = 42
+pi = 3.14
+greeting = "hello, world"
+
+// --- input ---
+input value
+
+// --- '.' as member access vs '.' inside a float: must lex differently ---
+y = 1.5
+z = arr.length

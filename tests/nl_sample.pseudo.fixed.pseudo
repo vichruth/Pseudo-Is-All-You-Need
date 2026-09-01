@@ -1,0 +1,19 @@
+nums[0] = 50
+nums[1] = 10
+nums[2] = 40
+nums[3] = 20
+
+// [AI Expanded]: Sort 'nums' in ascending order
+for _i = 0 to nums.length - 1 do
+    for _j = 0 to nums.length - 2 do
+        if (nums[_j] > nums[_j + 1]) then
+            _tmp = nums[_j]
+            nums[_j] = nums[_j + 1]
+            nums[_j + 1] = _tmp
+        endif
+    endfor
+endfor
+
+for i = 0 to nums.length - 1 do
+    output nums[i]
+endfor

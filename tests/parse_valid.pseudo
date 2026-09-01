@@ -1,0 +1,45 @@
+// Comprehensive valid pseudocode test covering all grammar rules
+
+function factorial(n)
+    if (n <= 1) then
+        return 1
+    else
+        return n * factorial(n - 1)
+    endif
+endfunction
+
+function print_array(arr, size)
+    for i = 0 to size - 1 do
+        output arr[i]
+    endfor
+endfunction
+
+// Main-style statements
+input max_count
+
+total = 0
+for idx = 1 to max_count do
+    total = total + factorial(idx)
+endfor
+
+output total
+
+// While & Repeat loops
+k = 0
+while (k < 5) do
+    k = k + 1
+endwhile
+
+repeat
+    k = k - 1
+until (k == 0)
+
+// Array indexing and member access
+numbers[0] = 10
+numbers[1] = 20
+len = numbers.length
+
+// Complex boolean expression
+if ((len > 0 and not false) or (total == 100)) then
+    output "condition met"
+endif
